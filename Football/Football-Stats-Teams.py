@@ -12,17 +12,15 @@ def season_csv(season):
     headers = [th.getText() for th in soup.findAll('tr')[1].findAll('th')]
     headers = headers[1:]
 
-    rows = soup.findAll('tr', class_=lambda
+    rows = soup.findAll('tr', class_ = lambda
         table_rows: table_rows != "thead")
     season_stats = [[td.getText() for td in rows[i].findAll('td')]
                     for i in range(len(rows))]
     season_stats = season_stats[2:]
 
     stats = pd.DataFrame(season_stats, columns = headers)
-
     stats = stats.replace(r'', 'N/A', regex=True)
     stats['Season'] = season
-
     stats.to_csv('Football-CSVs/{}seasonstats.csv'.format(season))
 
     print("Season stats for  {} season created.".format(season))
