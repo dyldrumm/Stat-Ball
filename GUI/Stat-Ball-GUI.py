@@ -11,13 +11,19 @@ tkRoot.resizable(width = True, height = True)
 tkRoot.title("Stat-Ball")
 
 tabControl = ttk.Notebook(tkRoot)
-footballTab = ttk.Frame(tabControl)
-basketballTab = ttk.Frame(tabControl)
-tabControl.add(footballTab, text = "Football")
-tabControl.add(basketballTab, text = "Basketball")
-tabControl.pack(expand = True, fill = tk.BOTH)
 
-GUIhelper.generate_season_input(footballTab)
+homeTab = ttk.Frame(tabControl)
+tabControl.add(homeTab, text = "Home")
+
+footballTab = ttk.Frame(tabControl)
+GUIhelper.generate_season_input_field(footballTab)
+tabControl.add(footballTab, text = "Football")
+
+basketballTab = ttk.Frame(tabControl)
+GUIhelper.generate_season_input_field(basketballTab)
+tabControl.add(basketballTab, text = "Basketball")
+
+tabControl.pack(expand = True, fill = tk.BOTH)
 
 tkRoot.mainloop()
 
