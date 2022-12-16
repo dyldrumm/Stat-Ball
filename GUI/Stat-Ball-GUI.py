@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import *
 import csv
 import os
+import GUIhelper
 
 tkRoot = tk.Tk()
 tkRoot.geometry("1000x650")
@@ -16,14 +17,7 @@ tabControl.add(footballTab, text = "Football")
 tabControl.add(basketballTab, text = "Basketball")
 tabControl.pack(expand = True, fill = tk.BOTH)
 
-season = tk.StringVar()
-
-seasonInputLabel = tk.Label(footballTab, text = "Enter the season you want to view:")
-seasonInput = tk.Entry(footballTab, fg = "white", bg = "gray", width = 12, textvariable = season)
-seasonInputButton = tk.Button(footballTab, width = 12, relief = RAISED, text = "Get season stats")
-seasonInputLabel.pack()
-seasonInput.pack()
-seasonInputButton.pack()
+GUIhelper.generate_season_input(footballTab)
 
 tkRoot.mainloop()
 
