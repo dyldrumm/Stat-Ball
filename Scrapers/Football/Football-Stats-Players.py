@@ -2,9 +2,9 @@ from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import pandas as pd
 
-season = 2019
+season = 2011
 
-def player_csv(season):
+def football_player_csv(season):
     url = "https://www.pro-football-reference.com/years/{}/fantasy.htm".format(season)
     html = urlopen(url)
     soup = BeautifulSoup(html, "html.parser")
@@ -19,11 +19,11 @@ def player_csv(season):
     player_stats = player_stats[2:]
 
     stats = pd.DataFrame(player_stats, columns = headers)
-    stats = stats.replace(r'', 'N/A', regex=True)
+    stats = stats.replace(r'', 'N/A', regex = True)
     stats['Season'] = season
-    stats.to_csv('CSVs/{}playerstats.csv'.format(season))
+    stats.to_csv('CSVs/football/players/{}footballplayerstats.csv'.format(season))
 
     print("Player stats for  {} season created.".format(season))
     soup.decompose
 
-player_csv(season)
+football_player_csv(season)

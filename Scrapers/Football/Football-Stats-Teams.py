@@ -4,7 +4,7 @@ import pandas as pd
 
 season = 2022
 
-def season_csv(season):
+def football_team_csv(season):
     url = "https://www.pro-football-reference.com/years/{}/#all_team_stats.htm".format(season)
     html = urlopen(url)
     soup = BeautifulSoup(html, "html.parser")
@@ -26,4 +26,4 @@ def season_csv(season):
     print("Season stats for  {} season created.".format(season))
     soup.decompose
 
-season_csv(season)
+football_team_csv(season)
