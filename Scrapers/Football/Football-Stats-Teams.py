@@ -21,7 +21,7 @@ def season_csv(season):
     stats = pd.DataFrame(season_stats, columns = headers)
     stats = stats.replace(r'', 'N/A', regex=True)
     stats['Season'] = season
-    stats.to_csv('Football-CSVs/{}seasonstats.csv'.format(season))
+    stats.to_csv('CSVs/{}seasonstats.csv'.format(season))
 
     print("Season stats for  {} season created.".format(season))
     soup.decompose
