@@ -81,17 +81,3 @@ def display_csv(root, season):
     values.pack(fill = tk.BOTH)
     root.add(panel)
     return panel
-
-    #margin = PanedWindow(root)
-    #scrollbarX = Scrollbar(margin, orient = HORIZONTAL)
-    #scrollbarY = Scrollbar(margin, orient = VERTICAL)
-    #tree = ttk.Treeview(margin, selectmode = "extended", yscrollcommand = scrollbarY.set, xscrollcommand = scrollbarX.set)
-    
-    #scrollbarX.config(command = tree.xview)
-    #scrollbarY.config(comman = tree.yview)
-    
-    #scrollbarX.pack(side = BOTTOM, fill = X)
-    #scrollbarY.pack(side = RIGHT, fill = Y)
-    
-    #headTitles = list()
-    #playerValues = list()

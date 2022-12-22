@@ -27,7 +27,6 @@ footballCSVPanel = GUIhelper.generate_csv_manager(footballPanel, "football")
 footballCSVPanel.add(GUIhelper.generate_season_input_field(footballCSVPanel))
 # Add CSV manager to panel
 footballPanel.add(footballCSVPanel)
-# Add CSV viewer to panel
 # Add Football tab
 footballPanel.pack(expand = True, fill = tk.BOTH)
 tabControl.add(footballTab, text = "Football")
