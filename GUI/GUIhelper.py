@@ -26,7 +26,7 @@ def generate_csv_manager(root, sport):
         seasons.append(filename[0:4])
     # Generate button for each season
     for season in seasons:
-        tempButton = tk.Button(panel, width = 8, relief = RAISED, text = season + " season player stats", command = partial(display_csv, root, season))
+        tempButton = tk.Button(panel, width = 8, relief = RAISED, text = season + " season player stats", command = partial(display_csv, root, season, sport))
         panel.add(tempButton)
     
     return panel
@@ -47,11 +47,15 @@ def generate_season_input_field(root):
 
     return panel
 
-def display_csv(root, season):
-    fileName = "CSVs/football/players/" + season + "footballplayerstats.csv"
+def display_csv(root, season, sport):
+    fileName = "CSVs/" + sport + "/players/" + season + "footballplayerstats.csv"
     headers = list()
+    
+    def closeCSV(window):
+        window.destroy()
 
     canvas = Canvas(root)
+    closeButton = Button(canvas, text = "Close", command = partial(closeCSV, canvas))
     yScroll = ttk.Scrollbar(canvas, orient = VERTICAL)
     xScroll = ttk.Scrollbar(canvas, orient = HORIZONTAL)
     tree = ttk.Treeview(canvas, yscrollcommand = yScroll.set, xscrollcommand = xScroll.set, height = 600)
@@ -91,9 +95,9 @@ def display_csv(root, season):
             tree.insert(parent = '', index = i, values = entry)
             i += 1
             
-
-    xScroll.pack(side = BOTTOM, fill = X, expand = False)
-    yScroll.pack(side = RIGHT, fill = Y, expand = False)
-    tree.pack(fill = BOTH)
+    xScroll.pack(side = BOTTOM, fill = X, expand = False, anchor = S)
+    yScroll.pack(side = RIGHT, fill = Y, expand = False, anchor = E)
+    closeButton.pack(side = TOP, expand = False, anchor = NE)
+    tree.pack(side = LEFT, fill = BOTH, anchor = W)
     root.add(canvas)
     return
