@@ -47,37 +47,53 @@ def generate_season_input_field(root):
 
     return panel
 
-# Generate table containing stats for selected season (Generated from stored CSV)
 def display_csv(root, season):
-    panel = PanedWindow(root, bd = 1, relief = "sunken", bg = "grey", orient = VERTICAL, borderwidth = 1)
     fileName = "CSVs/football/players/" + season + "footballplayerstats.csv"
     headers = list()
-    headers.append("Rank")
 
+    canvas = Canvas(root)
+    yScroll = ttk.Scrollbar(canvas, orient = VERTICAL)
+    xScroll = ttk.Scrollbar(canvas, orient = HORIZONTAL)
+    tree = ttk.Treeview(canvas, yscrollcommand = yScroll.set, xscrollcommand = xScroll.set, height = 600)
+    yScroll.configure(command = tree.yview)
+    xScroll.configure(command = tree.xview)
+    
+    # Read CSV
     with open(fileName, newline = '') as file:
         reader = csv.reader(file)
         first = next(reader)
         for head in first:
-            if(head != ''):
+            if(head == ''):
+                headers.append("Rank")
+            else:
                 headers.append(head)
-
-        labels = PanedWindow(panel, bd = 1, relief = "sunken", bg = "grey", orient = VERTICAL, borderwidth = 1)
-    
-        for i, head in enumerate(headers, start = 0):
-            label = tk.Label(labels, text = head, height = 2, width = 13, font=("Arial", 8))
-            label.pack(side = LEFT)
-
-        values = PanedWindow(panel, bd = 1, relief = "sunken", bg = "grey", orient = VERTICAL, borderwidth = 1)
+        
+        tree.configure(columns = headers)
+        
+        # Generate Headers & Columns
+        tree.heading("#0", text = "Rank", anchor = W)
+        tree.column("#0", stretch = NO, minwidth = 1, width = 35)
+        i = 0
+        for head in headers:
+            if(head == "Player"):
+                tree.heading(i, text = head, anchor = W)
+                tree.column(i, stretch = NO, minwidth = 1, width = 100)
+            else:
+                tree.heading(i, text = head, anchor = W)
+                tree.column(i, stretch = NO, minwidth = 1, width = 50)
+            i += 1
+        
+        # Load CSV data
         data = list(reader)
         
-        for entry in islice(data, 30):
-            temp = PanedWindow(panel, bd = 1, relief = "sunken", bg = "grey", orient = HORIZONTAL, borderwidth = 1)
-            for val in entry:
-                label = tk.Label(temp, text = val, height = 1, width = 13, font=("Arial", 8))
-                label.pack(side = LEFT)
-            values.add(temp)
+        i = 0
+        for entry in islice(data, 120):
+            tree.insert(parent = '', index = i, values = entry)
+            i += 1
+            
 
-    labels.pack()
-    values.pack(fill = tk.BOTH)
-    root.add(panel)
-    return panel
+    xScroll.pack(side = BOTTOM, fill = X, expand = False)
+    yScroll.pack(side = RIGHT, fill = Y, expand = False)
+    tree.pack(fill = BOTH)
+    root.add(canvas)
+    return
