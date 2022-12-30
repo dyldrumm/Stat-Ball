@@ -55,6 +55,7 @@ def display_csv(root, season, sport):
         window.destroy()
 
     canvas = Canvas(root)
+    seasonLabel = Label(canvas, text = season + " Stats")
     closeButton = Button(canvas, text = "Close", command = partial(closeCSV, canvas))
     yScroll = ttk.Scrollbar(canvas, orient = VERTICAL)
     xScroll = ttk.Scrollbar(canvas, orient = HORIZONTAL)
@@ -75,10 +76,13 @@ def display_csv(root, season, sport):
         tree.configure(columns = headers)
         
         # Generate Headers & Columns
-        tree.heading("#0", text = "Rank", anchor = W)
-        tree.column("#0", stretch = NO, minwidth = 1, width = 35)
         i = 0
+        tree.heading("#0", text = "", anchor = W)
+        tree.column("#0", stretch = NO, width = 0)
         for head in headers:
+            if(head == "Rank"):
+                tree.heading(i, text = "Rank", anchor = W)
+                tree.column(i, stretch = NO, minwidth = 1, width = 35)
             if(head == "Player"):
                 tree.heading(i, text = head, anchor = W)
                 tree.column(i, stretch = NO, minwidth = 1, width = 100)
@@ -97,6 +101,7 @@ def display_csv(root, season, sport):
             
     xScroll.pack(side = BOTTOM, fill = X, expand = False, anchor = S)
     yScroll.pack(side = RIGHT, fill = Y, expand = False, anchor = E)
+    seasonLabel.pack(side = TOP, expand = False, anchor = NW)
     closeButton.pack(side = TOP, expand = False, anchor = NE)
     tree.pack(side = LEFT, fill = BOTH, anchor = W)
     root.add(canvas)
